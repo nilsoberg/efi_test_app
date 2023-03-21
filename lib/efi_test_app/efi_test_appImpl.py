@@ -5,7 +5,7 @@ import os
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.ReadsUtilsClient import ReadsUtils
-from .utils import ExampleReadsApp
+from .name_in_out import NameInOutApp
 from base import Core
 
 
@@ -66,8 +66,8 @@ class efi_test_app:
         )
         # Download Reads
 
-        era = ExampleReadsApp(ctx, config=config)
-        output = era.do_analysis(params)
+        era = NameInOutApp(ctx, config=config)
+        output = era.copy_name(params)
 
         #END run_efi_test_app
 
