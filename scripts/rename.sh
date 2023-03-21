@@ -1,8 +1,4 @@
 #!/bin/bash
-if [ -z "$GITHUB_ACTION" ]; then
-  echo This script should only be run as a github action.
-  exit 1;
-fi
 
 # This script is meant to be run once immediately after cloning this repo.
 set -e
