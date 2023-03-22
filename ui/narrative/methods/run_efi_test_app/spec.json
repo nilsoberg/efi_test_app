@@ -45,9 +45,6 @@
                 },{
                     "input_parameter": "family_name",
                     "target_property": "family_name"
-                },{
-                    "input_parameter": "output_name",
-                    "target_property": "output_name"
                 }
             ],
             "output_mapping": [
@@ -57,6 +54,9 @@
                 },{
                     "service_method_output_path": [0,"report_ref"],
                     "target_property": "report_ref"
+                },{
+                    "input_parameter": "output_name",
+                    "target_property": "output_name"
                 }
             ]
         }
