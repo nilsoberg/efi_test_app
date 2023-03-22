@@ -31,13 +31,6 @@ parameters :
             Family name
         long-hint  : |
             Family name
-    output_name :
-        ui-name : |
-            Output Name
-        short-hint : |
-            The name of the family
-        long-hint  : |
-            The name of the family
 
 description : |
     <p>Displays the input name.</p>

@@ -17,17 +17,6 @@
             "allow_multiple": false,
             "default_values": [ "" ],
             "field_type": "text"
-        },
-        {
-            "id" : "output_name",
-            "optional" : false,
-            "advanced" : false,
-            "allow_multiple" : false,
-            "default_values" : [ "output" ],
-            "field_type" : "text",
-            "text_options" : {
-              "is_output_name":true
-            }
         }
     ],
     "behavior": {
@@ -54,9 +43,6 @@
                 },{
                     "service_method_output_path": [0,"report_ref"],
                     "target_property": "report_ref"
-                },{
-                    "input_parameter": "output_name",
-                    "target_property": "output_name"
                 }
             ]
         }
