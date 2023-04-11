@@ -12,6 +12,9 @@ import zipfile
 MODULE_DIR = "/kb/module"
 TEMPLATES_DIR = os.path.join(MODULE_DIR, "lib/templates")
 
+def log(message, prefix_newline=False):
+    """Logging function, provides a hook to suppress or redirect log messages."""
+    print(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
 
 class NameInOutApp(Core):
     def __init__(self, ctx, config, clients_class=None):
@@ -35,6 +38,10 @@ class NameInOutApp(Core):
         results_dir = os.path.join(self.scratch, str(uuid.uuid4()))
         text_file = os.path.join(results_dir, 'output.txt')
 
+        log('Saving family name ' + fname)
+        log(results_dir)
+        log(text_file)
+
         with open(text_file, 'w') as fh:
             fh.write('Family name: ' + fname + '\n')
 
@@ -48,6 +55,8 @@ class NameInOutApp(Core):
 
         output_dir = os.path.join(self.scratch, str(uuid.uuid4()))
         self._mkdir_p(output_dir)
+        
+        log('dl out dir ' + output_dir)
 
         result_file = os.path.join(output_dir, 'report.zip')
 
@@ -55,10 +64,15 @@ class NameInOutApp(Core):
             input_file = os.path.join(results_dir, 'output.txt')
             zip_file.write(input_file, 'results.txt')
         
+        log('zip ' + result_file)
+
         output_files.append({'path': result_file,
                              'name': 'report.zip',
                              'label': 'report.zip',
                              'description': 'Report files'})
+
+        log(output_files)
+        log('end dl')
 
         return output_files
 
@@ -69,16 +83,23 @@ class NameInOutApp(Core):
         output_dir = os.path.join(self.scratch, str(uuid.uuid4()))
         self._mkdir_p(output_dir)
 
+        log('html')
+        log(output_dir)
+
         report_file = os.path.join(output_dir, 'report.html')
+        log(report_file)
         template_file = os.path.join(TEMPLATES_DIR, 'report_template.html')
+        log(template_file)
 
         with open(report_file, 'w') as out_fh:
             with open(template_file, 'r') as template_fh:
                 text = template_fh.read()
+                log('TEXT: ' + text)
                 text.replace('{{output_name}}', 'HTML report family name: ' + params['output_name'])
                 out_fh.write(text)
 
         report_shock_id = self.dfu.file_to_shock({'file_path': output_dir, 'pack': 'zip'})['shock_id']
+        log(report_shock_id)
 
         #html_report.append({
         html_report.append({'shock_id': report_shock_id,
@@ -86,13 +107,17 @@ class NameInOutApp(Core):
                             'label': 'report.html',
                             'description': 'HTML summary report'})
 
+        log('end html')
+
         return html_report
 
     def generate_report(self, params: dict, results_dir):
-        
+       
+        log('start report')
         output_files = self.generate_download_file(params, results_dir)
 
         html_report_file = self.generate_report_file(params, results_dir)
+        log('end report')
 
         report_params = {'message': '',
                          'workspace_name': params.get('workspace_name'),
@@ -103,10 +128,16 @@ class NameInOutApp(Core):
                          'html_window_height': 200,
                          'report_object_name': 'efi_test_app_report_' + str(uuid.uuid4())}
 
+        log('report params')
+        log(report_params)
+
         report_client = KBaseReport(self.callback_url)
         output = report_client.create_extended_report(report_params)
 
         report_output = {'report_name': output['name'], 'report_ref', output['ref']}
+
+        log('report_name:' + output['name'])
+        log('report_ref:' + output['ref'])
 
         return report_output
 
