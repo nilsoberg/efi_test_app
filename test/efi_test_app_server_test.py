@@ -16,6 +16,7 @@ class efi_test_appTest(unittest.TestCase):
     def setUpClass(cls):
         token = os.environ.get("KB_AUTH_TOKEN", None)
         config_file = os.environ.get("KB_DEPLOYMENT_CONFIG", None)
+        print("CONFIG FILE: " + config_file + "\n\n\n\n")
         cls.cfg = {}
         config = ConfigParser()
         config.read(config_file)
@@ -73,10 +74,14 @@ class efi_test_appTest(unittest.TestCase):
             self.ctx,
             {
                 "workspace_name": self.wsName,
-                "reads_ref": "58783/4/1",
+                "reads_ref": "70257/2/1",
                 "output_name": "ReadsOutputName",
+                "family_name": "PF00001",
             },
         )
+
+        assert(len(ret) > 0)
+
         # next steps:
         # - download report
         # - assert that the report has expected contents

@@ -27,9 +27,9 @@ class efi_test_app:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.1"
-    GIT_URL = ""
-    GIT_COMMIT_HASH = ""
+    VERSION = "0.0.3"
+    GIT_URL = "https://nilsoberg@github.com/nilsoberg/efi_test_app.git"
+    GIT_COMMIT_HASH = "2d14c5c80538b04de6c0dd539027461eff50cd13"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -44,6 +44,7 @@ class efi_test_app:
                             level=logging.INFO)
         #END_CONSTRUCTOR
         pass
+
 
     def run_efi_test_app(self, ctx, params):
         """
@@ -77,7 +78,6 @@ class efi_test_app:
                              'output is not type dict as required.')
         # return the results
         return [output]
-
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
